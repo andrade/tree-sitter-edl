@@ -1,0 +1,31 @@
+========
+Comments
+========
+
+/*
+* This is a block comment.
+*/
+enclave {
+
+	// Another comment goes here
+
+	trusted {
+		/** Some comment. */
+	};
+
+	/**
+	** foo
+	**/
+	untrusted {
+		// line comment
+	};
+};
+// Another comment
+
+---
+
+(source_file (comments) (comments)
+  (trusted (comments))
+  (comments)
+  (untrusted (comments))
+  (comments))

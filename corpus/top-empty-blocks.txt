@@ -1,0 +1,69 @@
+===================
+Enclave empty block
+===================
+
+enclave {};
+
+---
+
+(source_file)
+
+
+===================
+Trusted empty block
+===================
+
+enclave {
+	trusted {
+	};
+};
+
+---
+
+(source_file (trusted))
+
+
+=====================
+Untrusted empty block
+=====================
+
+enclave {
+	untrusted {
+	};
+};
+
+---
+
+(source_file (untrusted))
+
+
+=======================
+All top-level blocks TU
+=======================
+
+enclave {
+	trusted {
+	};
+	untrusted {
+	};
+};
+
+---
+
+(source_file (trusted) (untrusted))
+
+
+=======================
+All top-level blocks UT
+=======================
+
+enclave {
+	untrusted {
+	};
+	trusted {
+	};
+};
+
+---
+
+(source_file (untrusted) (trusted))
