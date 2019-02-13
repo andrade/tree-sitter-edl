@@ -134,7 +134,7 @@ module.exports = grammar({
 			$.union_specifier,
 			$.enum_specifier,
 
-			'foo'
+			'bool'
 		),
 
 		struct_specifier: $ => seq('struct', $.identifier),
