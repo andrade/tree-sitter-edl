@@ -135,6 +135,8 @@ module.exports = grammar({
 			$.union_specifier,
 			$.enum_specifier,
 
+			$.identifier,
+
 			'bool'
 		),
 
@@ -160,6 +162,7 @@ module.exports = grammar({
 			'wstring',
 			$.size_attribute,
 			$.count_attribute,
+			'isary',
 			'isptr',
 			'readonly'
 		),
