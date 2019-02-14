@@ -70,7 +70,7 @@ module.exports = grammar({
 			$.retval,
 			$.identifier,
 			'(',
-			optional(seq($.parameter, repeat(seq(',', $.parameter)))),
+			optional($._parameters),
 			')',
 			repeat($._trusted_suffix),
 			';'
@@ -80,7 +80,7 @@ module.exports = grammar({
 			$.retval,
 			$.identifier,
 			'(',
-			optional(seq($.parameter, repeat(seq(',', $.parameter)))),
+			optional($._parameters),
 			')',
 			optional($.untrusted_suffix_allow),
 			repeat($._untrusted_suffix),
@@ -92,6 +92,13 @@ module.exports = grammar({
 			$.type_specifier,
 			optional($.pointer_declarator),
 		),
+
+		_parameters: $ => choice(
+			$.void_type,
+			seq($.parameter, repeat(seq(',', $.parameter)))
+		),
+
+		void_type: $ => "void",
 
 		parameter: $ => seq(
 			optional($.attribute_list),
