@@ -1,0 +1,89 @@
+/*
+* Copyright (c) 2019, Daniel Andrade
+*
+* Permission to use, copy, modify, and/or distribute this software for any
+* purpose with or without fee is hereby granted, provided that the above
+* copyright notice and this permission notice appear in all copies.
+*
+* THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+* WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+* MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+* ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+* WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+* ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+* OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+*/
+
+enclave {
+
+	// imports all functions
+	from "sgx_tprotected_fs.edl" import *;
+
+	// imports two specific functions
+	from "other.edl" import f1, function_2;
+
+	from "planets.edl" import *;
+	from "time.edl" import *;
+
+	trusted {
+		include "stdint.h"  // we need it for `uint8_t`
+
+		/**
+		** This is an ECALL.
+		** This ECALL returns nothing.
+		**/
+		public void ecall_one([in, string] const char *s);
+
+		/**
+		** This is another ECALL.
+		** This ECALL returns an integer.
+		**/
+		int ecall_two([in, string] const char *str,
+				[in, count=64] uint8_t *in,
+				[in, size=n] void *p, size_t n);
+
+		public void ecall_ten(void) transition_using_threads;
+	};
+
+	untrusted {
+
+		// import some types
+		include "../dir1/types.h"
+		include "stdbool.h"
+
+		/*
+		* One OCALL.
+		*/
+		long ocall_one([user_check] void *p, enum days day, struct user *user);
+
+		/**
+		** This OCALL is a bit more complex.
+		**/
+		void ocall_two(int a, long b, char c, double d,
+				[in, size=size_in] const void *data_in, size_t size_in,
+				[out, size=size_out] void *data_out, size_t size_out,
+				[out] size_t *actual) allow (ecall_one);
+
+		// allow two trusted calls
+		void ocall_three(int n, bool allow) allow (ecall_one, ecall_two);
+
+		size_t ocall_five([in, isptr, size=size] strbuf sb, size_t size);
+
+		// this OCALL has a user-defined data type as parameter
+		size_t ocall_four([in, isary] new_type nt) propagate_errno;
+
+		size_t ocall_six() allow (ecall_one)
+				transition_using_threads propagate_errno;
+
+		size_t ocall_seven([in, size=n] char *p, size_t n) allow (ecall_one)
+				propagate_errno transition_using_threads;
+
+		size_t ocall_eight() transition_using_threads propagate_errno;
+
+		size_t ocall_nine() propagate_errno transition_using_threads;
+
+		void ocall_ten(void) transition_using_threads;
+	};
+};
+
+// $ tree-sitter parse examples/fake1.edl
