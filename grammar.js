@@ -81,7 +81,8 @@ module.exports = grammar({
 			'(',
 			optional(seq($.parameter, repeat(seq(',', $.parameter)))),
 			')',
-			optional($.untrusted_suffix),
+			optional($.suffix_allow),
+			repeat($._untrusted_suffix),
 			';'
 		),
 
@@ -192,12 +193,21 @@ module.exports = grammar({
 
 		trusted_prefix: $ => 'public',
 
-		untrusted_suffix: $ => seq(
+		suffix_allow: $ => seq(
 			'allow',
 			'(',
 			seq($.identifier, repeat(seq(',', $.identifier))),
 			')'
 		),
+
+		_untrusted_suffix: $ => choice(
+			$.suffix_propagate_errno,
+			$.suffix_transition_using_threads
+		),
+
+		suffix_propagate_errno: $ => "propagate_errno",
+
+		suffix_transition_using_threads: $ => "transition_using_threads",
 
 		identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
