@@ -66,7 +66,7 @@ module.exports = grammar({
 		),
 
 		ecall_definition: $ => seq(
-			optional($.trusted_prefix),
+			optional($.trusted_prefix_public),
 			$.retval,
 			$.identifier,
 			'(',
@@ -81,7 +81,7 @@ module.exports = grammar({
 			'(',
 			optional(seq($.parameter, repeat(seq(',', $.parameter)))),
 			')',
-			optional($.suffix_allow),
+			optional($.untrusted_suffix_allow),
 			repeat($._untrusted_suffix),
 			';'
 		),
@@ -191,9 +191,9 @@ module.exports = grammar({
 		//	'propagate_errno'
 		//),
 
-		trusted_prefix: $ => 'public',
+		trusted_prefix_public: $ => 'public',
 
-		suffix_allow: $ => seq(
+		untrusted_suffix_allow: $ => seq(
 			'allow',
 			'(',
 			seq($.identifier, repeat(seq(',', $.identifier))),
