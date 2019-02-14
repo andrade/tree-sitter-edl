@@ -1,10 +1,14 @@
 {
   "name": "tree-sitter-edl",
   "version": "1.0.0",
-  "description": "Enclave Definition Language (EDL) grammar for node-tree-sitter",
+  "description": "Enclave Definition Language (EDL) grammar for tree-sitter",
   "main": "index.js",
   "scripts": {
     "test": "tree-sitter test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Andrade/tree-sitter-edl.git"
   },
   "keywords": [
     "parser",
@@ -12,6 +16,10 @@
   ],
   "author": "Daniel Andrade",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Andrade/tree-sitter-edl/issues"
+  },
+  "homepage": "https://github.com/Andrade/tree-sitter-edl",
   "dependencies": {
     "nan": "^2.12.1"
   },
