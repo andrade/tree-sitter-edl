@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Andrade/tree-sitter-edl.git"
+    "url": "https://github.com/andrade/tree-sitter-edl.git"
   },
   "keywords": [
     "parser",
@@ -17,9 +17,9 @@
   "author": "Daniel Andrade",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Andrade/tree-sitter-edl/issues"
+    "url": "https://github.com/andrade/tree-sitter-edl/issues"
   },
-  "homepage": "https://github.com/Andrade/tree-sitter-edl",
+  "homepage": "https://github.com/andrade/tree-sitter-edl",
   "dependencies": {
     "nan": "^2.12.1"
   },
